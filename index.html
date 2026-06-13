@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>∑ — a multimodal experiential installation</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #141414;
+      --divider: #222;
+      --text-primary: #f0ede8;
+      --text-muted: #888;
+      --accent: #c8b89a;
+      --arrow-bg: #1a1a1a;
+      --arrow-hover: #c8b89a;
+      --header-h: 68px;
+      --video-pad: 20px;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+    }
+
+    /* ── Header ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--divider);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 36px;
+    }
+
+    .site-title {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .site-title .sigma {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.75rem;
+      font-style: italic;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .site-title .dash {
+      font-size: 0.8rem;
+      color: var(--divider);
+    }
+
+    .site-title .subtitle {
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    #counter {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #444;
+    }
+
+    #counter span { color: var(--accent); }
+
+    /* ── Stage ── */
+    .stage {
+      position: fixed;
+      top: var(--header-h);
+      left: 0; right: 0; bottom: 0;
+    }
+
+    /* ── Scene ── */
+    .scene {
+      display: none;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      animation: fadeIn 0.5s ease forwards;
+    }
+    .scene.active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(14px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ── Video column ── */
+    .col-video {
+      width: 65%;
+      height: 100%;
+      flex-shrink: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--video-pad);
+      position: relative;
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border: 1px solid var(--divider);
+      overflow: hidden;
+      background: #000;
+    }
+
+    .col-video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .col-video::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 10%; bottom: 10%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--divider), transparent);
+    }
+
+    /* ── Info column ── */
+    .col-info {
+      width: 35%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px 36px 80px 40px;
+      background: var(--surface);
+      position: relative;
+      overflow-y: auto;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+
+    .col-info h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.3rem, 1.8vw, 2rem);
+      line-height: 1.2;
+      font-weight: 400;
+      margin-bottom: 18px;
+      color: var(--text-primary);
+    }
+
+    .col-info h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .col-info p {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 260px;
+    }
+
+    .meta {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .meta-item {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #555;
+      display: flex;
+      gap: 10px;
+    }
+
+    .meta-item span:first-child { color: var(--accent); }
+
+    /* ── Bottom bar: dots + arrows ── */
+    .bottom-bar {
+      position: absolute;
+      bottom: 28px;
+      left: 40px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* dots */
+    .dots {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #333;
+      transition: background 0.3s, transform 0.3s;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+
+    /* arrows */
+    .arrow-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-arrow {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--arrow-bg);
+      border: 1px solid var(--divider);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s;
+      flex-shrink: 0;
+    }
+
+    .nav-arrow:hover:not(:disabled) {
+      background: var(--arrow-hover);
+      border-color: var(--arrow-hover);
+    }
+
+    .nav-arrow:hover:not(:disabled) svg path { stroke: #0d0d0d; }
+
+    .nav-arrow.prev:hover:not(:disabled) { transform: translateX(-2px); }
+    .nav-arrow.next:hover:not(:disabled) { transform: translateX(2px); }
+
+    .nav-arrow:disabled {
+      opacity: 0.2;
+      cursor: default;
+    }
+
+    .nav-arrow svg { width: 16px; height: 16px; }
+
+    .nav-arrow svg path {
+      stroke: var(--text-muted);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.2s;
+    }
+
+    /* ── Responsive: tablet ── */
+    @media (max-width: 900px) {
+      :root { --header-h: 58px; --video-pad: 14px; }
+
+      .scene { flex-direction: column; overflow-y: auto; }
+
+      .col-video {
+        width: 100%;
+        height: calc(56vw + 28px);
+        min-height: 220px;
+        flex-shrink: 0;
+      }
+
+      .col-video::after { display: none; }
+
+      .col-info {
+        width: 100%;
+        height: auto;
+        justify-content: flex-start;
+        padding: 28px 28px 90px;
+      }
+
+      .col-info p { max-width: 100%; }
+
+      .bottom-bar { left: 28px; right: 20px; bottom: 24px; }
+    }
+
+    /* ── Responsive: mobile ── */
+    @media (max-width: 520px) {
+      :root { --header-h: 52px; --video-pad: 10px; }
+
+      header { padding: 0 16px; }
+
+      .site-title .subtitle,
+      .site-title .dash { display: none; }
+
+      .col-video { height: calc(58vw + 20px); min-height: 190px; }
+
+      .col-info { padding: 22px 20px 86px; }
+
+      .col-info h2 { font-size: 1.3rem; }
+
+      .meta { margin-top: 22px; }
+
+      .bottom-bar { left: 20px; right: 16px; }
+
+      .nav-arrow { width: 38px; height: 38px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="site-title">
+      <span class="sigma">∑</span>
+      <span class="dash">—</span>
+      <span class="subtitle">a multimodal experiential installation</span>
+    </div>
+    <div id="counter"><span>01</span> / 06</div>
+  </header>
+
+  <div class="stage" id="stage">
+
+    <!-- Scene 1 -->
+    <div class="scene active">
+      <div class="col-video">
+        <div class="video-frame">
+          <iframe src="https://player.vimeo.com/video/1199476561?autoplay=1&loop=1&muted=1&background=1"
+            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Video 1"></iframe>
+        </div>
+      </div>
+      <div class="col-info">
+        <p class="eyebrow">Chapter 01 — Environment</p>
+        <h2>Land shaped by<br/><em>time and silence</em></h2>
+        <p>A slow survey of untouched terrain. Wind-carved plateaus, mineral-stained riverbanks, and low cloud draped across ancient ridgelines — the landscape holds its own history without annotation.</p>
+        <div class="meta">
+          <div class="meta-item"><span>Duration</span><span>4 min 12 sec</span></div>
+          <div class="meta-item"><span>Location</span><span>Iceland, 2024</span></div>
+          <div class="meta-item"><span>Format</span><span>4K / 24fps</span></div>
+        </div>
+        <div class="bottom-bar">
+          <div class="dots" id="dots-0"></div>
+          <div class="arrow-group">
+            <button class="nav-arrow prev" onclick="navigate(-1)" aria-label="Previous">
+              <svg viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="nav-arrow next" onclick="navigate(1)" aria-label="Next">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 2 -->
+    <div class="scene">
+      <div class="col-video">
+        <div class="video-frame">
+          <iframe src="https://player.vimeo.com/video/1199477862?autoplay=1&loop=1&muted=1&background=1"
+            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Video 2"></iframe>
+        </div>
+      </div>
+      <div class="col-info">
+        <p class="eyebrow">Chapter 02 — Motion</p>
+        <h2>Form in<br/><em>perpetual drift</em></h2>
+        <p>Abstract movement studies filmed at high frame rate, then rendered at half speed. Fabric, water, smoke — materials that resist stillness, caught in a moment that lasts longer than it should.</p>
+        <div class="meta">
+          <div class="meta-item"><span>Duration</span><span>6 min 04 sec</span></div>
+          <div class="meta-item"><span>Location</span><span>Studio, Berlin</span></div>
+          <div class="meta-item"><span>Format</span><span>4K / 120fps</span></div>
+        </div>
+        <div class="bottom-bar">
+          <div class="dots" id="dots-1"></div>
+          <div class="arrow-group">
+            <button class="nav-arrow prev" onclick="navigate(-1)" aria-label="Previous">
+              <svg viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="nav-arrow next" onclick="navigate(1)" aria-label="Next">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 3 -->
+    <div class="scene">
+      <div class="col-video">
+        <div class="video-frame">
+          <!-- Replace with your Vimeo video ID -->
+          <iframe src="https://player.vimeo.com/video/1200245942?autoplay=1&loop=1&muted=1&background=1"
+            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Video 3"></iframe>
+        </div>
+      </div>
+      <div class="col-info">
+        <p class="eyebrow">Chapter 03 — Sound</p>
+        <h2>Frequency<br/><em>made visible</em></h2>
+        <p>Acoustic waveforms translated into light and geometry. Each resonance leaves a trace — a brief architecture that collapses as the next note rises to take its place.</p>
+        <div class="meta">
+          <div class="meta-item"><span>Duration</span><span>5 min 30 sec</span></div>
+          <div class="meta-item"><span>Location</span><span>Anechoic Lab, Vienna</span></div>
+          <div class="meta-item"><span>Format</span><span>4K / 48fps</span></div>
+        </div>
+        <div class="bottom-bar">
+          <div class="dots" id="dots-2"></div>
+          <div class="arrow-group">
+            <button class="nav-arrow prev" onclick="navigate(-1)" aria-label="Previous">
+              <svg viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="nav-arrow next" onclick="navigate(1)" aria-label="Next">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 4 -->
+    <div class="scene">
+      <div class="col-video">
+        <div class="video-frame">
+          <!-- Replace with your Vimeo video ID -->
+          <iframe src="https://player.vimeo.com/video/1200969421?autoplay=1&loop=1&muted=1&background=1"
+            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Video 4"></iframe>
+        </div>
+      </div>
+      <div class="col-info">
+        <p class="eyebrow">Chapter 04 — Body</p>
+        <h2>Skin as<br/><em>threshold</em></h2>
+        <p>The body in extremis: endurance, temperature, pressure. Shot in total darkness save for a single infrared source, this chapter maps heat where language fails.</p>
+        <div class="meta">
+          <div class="meta-item"><span>Duration</span><span>7 min 18 sec</span></div>
+          <div class="meta-item"><span>Location</span><span>Black Box, Tokyo</span></div>
+          <div class="meta-item"><span>Format</span><span>IR / 24fps</span></div>
+        </div>
+        <div class="bottom-bar">
+          <div class="dots" id="dots-3"></div>
+          <div class="arrow-group">
+            <button class="nav-arrow prev" onclick="navigate(-1)" aria-label="Previous">
+              <svg viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="nav-arrow next" onclick="navigate(1)" aria-label="Next">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 5 -->
+    <div class="scene">
+      <div class="col-video">
+        <div class="video-frame">
+          <!-- Replace with your Vimeo video ID -->
+          <iframe src="https://player.vimeo.com/video/250294796?autoplay=1&loop=1&muted=1&background=1"
+            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Video 5"></iframe>
+        </div>
+      </div>
+      <div class="col-info">
+        <p class="eyebrow">Chapter 05 — Memory</p>
+        <h2>What remains<br/><em>after light</em></h2>
+        <p>Double-exposed archival footage layered over contemporary material. The past bleeds through without ever resolving into clarity — familiar yet irrecoverable, like a half-remembered room.</p>
+        <div class="meta">
+          <div class="meta-item"><span>Duration</span><span>9 min 44 sec</span></div>
+          <div class="meta-item"><span>Location</span><span>Archive, Lisbon</span></div>
+          <div class="meta-item"><span>Format</span><span>16mm scan / digital</span></div>
+        </div>
+        <div class="bottom-bar">
+          <div class="dots" id="dots-4"></div>
+          <div class="arrow-group">
+            <button class="nav-arrow prev" onclick="navigate(-1)" aria-label="Previous">
+              <svg viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="nav-arrow next" onclick="navigate(1)" aria-label="Next">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 6 -->
+    <div class="scene">
+      <div class="col-video">
+        <div class="video-frame">
+          <!-- Replace with your Vimeo video ID -->
+          <iframe src="https://player.vimeo.com/video/295928275?autoplay=1&loop=1&muted=1&background=1"
+            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Video 6"></iframe>
+        </div>
+      </div>
+      <div class="col-info">
+        <p class="eyebrow">Chapter 06 — Dissolution</p>
+        <h2>Everything<br/><em>tends toward field</em></h2>
+        <p>The final chapter offers no resolution. Objects lose their edges, figures recede into gradient, and the frame itself becomes a question about where the work ends and the viewer begins.</p>
+        <div class="meta">
+          <div class="meta-item"><span>Duration</span><span>11 min 02 sec</span></div>
+          <div class="meta-item"><span>Location</span><span>Atacama Desert</span></div>
+          <div class="meta-item"><span>Format</span><span>4K / 60fps</span></div>
+        </div>
+        <div class="bottom-bar">
+          <div class="dots" id="dots-5"></div>
+          <div class="arrow-group">
+            <button class="nav-arrow prev" onclick="navigate(-1)" aria-label="Previous">
+              <svg viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="nav-arrow next" onclick="navigate(1)" aria-label="Next">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /stage -->
+
+  <script>
+    const TOTAL = 6;
+    let current = 0;
+
+    // Build dot rows (one per scene, all identical — just 6 dots)
+    function buildDots() {
+      for (let s = 0; s < TOTAL; s++) {
+        const container = document.getElementById('dots-' + s);
+        for (let d = 0; d < TOTAL; d++) {
+          const dot = document.createElement('div');
+          dot.className = 'dot' + (d === s ? ' active' : '');
+          const target = d; // capture
+          dot.addEventListener('click', () => goTo(target));
+          container.appendChild(dot);
+        }
+      }
+    }
+
+    function goTo(index) {
+      const scenes = document.querySelectorAll('.scene');
+      scenes[current].classList.remove('active');
+      current = index;
+      scenes[current].classList.add('active');
+      updateUI();
+    }
+
+    function navigate(dir) {
+      const next = current + dir;
+      if (next < 0 || next >= TOTAL) return;
+      goTo(next);
+    }
+
+    function updateUI() {
+      // header counter
+      document.getElementById('counter').innerHTML =
+        '<span>' + String(current + 1).padStart(2, '0') + '</span> / 0' + TOTAL;
+
+      // all arrow buttons across all scenes
+      document.querySelectorAll('.nav-arrow.prev').forEach(btn => {
+        btn.disabled = current === 0;
+      });
+      document.querySelectorAll('.nav-arrow.next').forEach(btn => {
+        btn.disabled = current === TOTAL - 1;
+      });
+    }
+
+    buildDots();
+    updateUI();
+  </script>
+</body>
+</html>
