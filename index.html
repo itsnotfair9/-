@@ -158,7 +158,7 @@
     .eyebrow {
       font-size: 10px;
       letter-spacing: 0.2em;
-      text-transform: uppercase;
+      /*text-transform: uppercase;*/
       color: var(--accent);
       margin-bottom: 18px;
     }
@@ -170,6 +170,16 @@
       font-weight: 400;
       margin-bottom: 18px;
       color: var(--text-primary);
+    }
+
+    .col-info h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 10px;
+      /*line-height: 1.2;*/
+      text-transform: lowercase;
+      /*font-weight: 400;*/
+      margin-bottom: 18px;
+      color: var(--accent);
     }
 
     .col-info h2 em {
@@ -202,6 +212,16 @@
     }
 
     .meta-item span:first-child { color: var(--accent); }
+
+    .description {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #555;
+      display: flex;
+      gap: 10px;
+      /*color: var(--accent);*/
+    }
 
     /* ── Bottom bar: dots + arrows ── */
     .bottom-bar {
@@ -336,9 +356,9 @@
     <div class="site-title">
       <span class="sigma">∑</span>
       <span class="dash">—</span>
-      <span class="subtitle">a multimodal experiential installation</span>
+      <span class="subtitle">a multisensory experience</span>
     </div>
-    <div id="counter"><span>01</span> / 06</div>
+    <!-- <div id="counter"><span>01</span> / 06</div> -->
   </header>
 
   <div class="stage" id="stage">
@@ -352,13 +372,15 @@
         </div>
       </div>
       <div class="col-info">
-        <p class="eyebrow">Chapter 01 — Environment</p>
-        <h2>Land shaped by<br/><em>time and silence</em></h2>
-        <p>A slow survey of untouched terrain. Wind-carved plateaus, mineral-stained riverbanks, and low cloud draped across ancient ridgelines — the landscape holds its own history without annotation.</p>
+        <p class="eyebrow">fig. 1 — ENVIRONMENT</p>
+        <h2>perceiving<br/><em>Perception</em></h2>
+        <p>∑ is a portable, multisensory experiental installation. ∑ investigates the interdependency of sonic, tactile and visual perception.</p>
+        
         <div class="meta">
-          <div class="meta-item"><span>Duration</span><span>4 min 12 sec</span></div>
-          <div class="meta-item"><span>Location</span><span>Iceland, 2024</span></div>
-          <div class="meta-item"><span>Format</span><span>4K / 24fps</span></div>
+          <div class="description"><span>Requirements:</span></div>
+          <div class="meta-item"><span>Space</span><span>4 qubik meters</span></div>
+          <div class="meta-item"><span>Power</span><span>220V mains, 16 Ampere</span></div>
+          <!-- <div class="meta-item"><span>Format</span><span>4K / 24fps</span></div> -->
         </div>
         <div class="bottom-bar">
           <div class="dots" id="dots-0"></div>
@@ -383,13 +405,14 @@
         </div>
       </div>
       <div class="col-info">
-        <p class="eyebrow">Chapter 02 — Motion</p>
-        <h2>Form in<br/><em>perpetual drift</em></h2>
-        <p>Abstract movement studies filmed at high frame rate, then rendered at half speed. Fabric, water, smoke — materials that resist stillness, caught in a moment that lasts longer than it should.</p>
+        <p class="eyebrow">fig. 2 — SOUND</p>
+        <h2>spatial<br/><em>resolution</em></h2>
+        <p>18 OTTOsonic spakers arranged around the listeners head. This ambisonic setup provides a fine grained spatial resolution in the acoustic domain.</p>
         <div class="meta">
-          <div class="meta-item"><span>Duration</span><span>6 min 04 sec</span></div>
-          <div class="meta-item"><span>Location</span><span>Studio, Berlin</span></div>
-          <div class="meta-item"><span>Format</span><span>4K / 120fps</span></div>
+          <div class="description"><span>we bring:</span></div>
+          <div class="meta-item"><span>interface</span><span>24 audio channels</span></div>
+          <div class="meta-item"><span>amplification</span><span>three 8-Channel power amplifiers</span></div>
+          <!-- <div class="meta-item"><span>Format</span><span>4K / 120fps</span></div> -->
         </div>
         <div class="bottom-bar">
           <div class="dots" id="dots-1"></div>
@@ -410,18 +433,18 @@
       <div class="col-video">
         <div class="video-frame">
           <!-- Replace with your Vimeo video ID -->
-          <iframe src="https://player.vimeo.com/video/1200245942?autoplay=1&loop=1&muted=1&background=1"
+          <iframe src="https://player.vimeo.com/video/1201072878?autoplay=1&loop=1&muted=1&background=1"
             allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Video 3"></iframe>
         </div>
       </div>
       <div class="col-info">
-        <p class="eyebrow">Chapter 03 — Sound</p>
-        <h2>Frequency<br/><em>made visible</em></h2>
-        <p>Acoustic waveforms translated into light and geometry. Each resonance leaves a trace — a brief architecture that collapses as the next note rises to take its place.</p>
+        <p class="eyebrow">fig. 3 — Touch</p>
+        <h2>frequency<br/><em>made tangible</em></h2>
+        <p>Acoustic waveforms translated into touch. Peaks and Valleys. Skin as threshold. The body resonates with personal frequencies.</p>
         <div class="meta">
-          <div class="meta-item"><span>Duration</span><span>5 min 30 sec</span></div>
-          <div class="meta-item"><span>Location</span><span>Anechoic Lab, Vienna</span></div>
-          <div class="meta-item"><span>Format</span><span>4K / 48fps</span></div>
+          <div class="meta-item"><span>transducers</span><span>produce subharmonics thru difference tones </span></div>
+          <!-- <div class="meta-item"><span>Location</span><span>Anechoic Lab, Vienna</span></div> -->
+          <!-- <div class="meta-item"><span>Format</span><span>4K / 48fps</span></div> -->
         </div>
         <div class="bottom-bar">
           <div class="dots" id="dots-2"></div>
@@ -442,18 +465,18 @@
       <div class="col-video">
         <div class="video-frame">
           <!-- Replace with your Vimeo video ID -->
-          <iframe src="https://player.vimeo.com/video/1200969421?autoplay=1&loop=1&muted=1&background=1"
+          <iframe src="https://player.vimeo.com/video/1201077031?autoplay=1&loop=1&muted=1&background=1"
             allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Video 4"></iframe>
         </div>
       </div>
       <div class="col-info">
-        <p class="eyebrow">Chapter 04 — Body</p>
-        <h2>Skin as<br/><em>threshold</em></h2>
-        <p>The body in extremis: endurance, temperature, pressure. Shot in total darkness save for a single infrared source, this chapter maps heat where language fails.</p>
+        <p class="eyebrow">fig. 4 — Ganzfeld</p>
+        <h2>featureless space<br/><em>endless light</em></h2>
+        <p>Radikal visual reduction. No contours, no objects, no depth. Just an endless color space. This yields a paradox: seeing without seeing. Transition from looking at something to simply experiencing <italic>being</italic></p>
         <div class="meta">
-          <div class="meta-item"><span>Duration</span><span>7 min 18 sec</span></div>
-          <div class="meta-item"><span>Location</span><span>Black Box, Tokyo</span></div>
-          <div class="meta-item"><span>Format</span><span>IR / 24fps</span></div>
+          <!-- <div class="meta-item"><span>Wolfgang Metzger</span><span>7 min 18 sec</span></div> -->
+          <!-- <div class="meta-item"><span>Location</span><span>Black Box, Tokyo</span></div> -->
+          <!-- <div class="meta-item"><span>Format</span><span>IR / 24fps</span></div> -->
         </div>
         <div class="bottom-bar">
           <div class="dots" id="dots-3"></div>
@@ -474,18 +497,19 @@
       <div class="col-video">
         <div class="video-frame">
           <!-- Replace with your Vimeo video ID -->
-          <iframe src="https://player.vimeo.com/video/250294796?autoplay=1&loop=1&muted=1&background=1"
+          <iframe src="https://player.vimeo.com/video/1201084801?autoplay=1&loop=1&muted=1&background=1"
             allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Video 5"></iframe>
         </div>
       </div>
       <div class="col-info">
-        <p class="eyebrow">Chapter 05 — Memory</p>
-        <h2>What remains<br/><em>after light</em></h2>
-        <p>Double-exposed archival footage layered over contemporary material. The past bleeds through without ever resolving into clarity — familiar yet irrecoverable, like a half-remembered room.</p>
+        <p class="eyebrow">fig. 5 — Flicker</p>
+        <h2>extatic<br/><em>Hallucination</em></h2>
+        <p>Rhythmic flashes of white light stimulate the visual cortex: a network of neurons that generate colorful, 3-dimensional patterns. Observe the process of seeing from the perspective of your brain.</p>
         <div class="meta">
-          <div class="meta-item"><span>Duration</span><span>9 min 44 sec</span></div>
-          <div class="meta-item"><span>Location</span><span>Archive, Lisbon</span></div>
-          <div class="meta-item"><span>Format</span><span>16mm scan / digital</span></div>
+          <div class="meta-item"><span>Flicker-Frequency</span><span>5 - 25 Hz</span></div>
+          <div class="meta-item"><span>Caution</span><span>may cause photo-induced epilepsy</span></div>
+          <div class="meta-item"><span>Safety</span><span>the trip can be aborted at any time by the participant</span></div>
+          <!-- <div class="meta-item"><span>Format</span><span>16mm scan / digital</span></div> -->
         </div>
         <div class="bottom-bar">
           <div class="dots" id="dots-4"></div>
@@ -506,18 +530,17 @@
       <div class="col-video">
         <div class="video-frame">
           <!-- Replace with your Vimeo video ID -->
-          <iframe src="https://player.vimeo.com/video/295928275?autoplay=1&loop=1&muted=1&background=1"
+          <iframe src="https://player.vimeo.com/video/1201090289?autoplay=1&loop=1&muted=1&background=1"
             allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Video 6"></iframe>
         </div>
       </div>
       <div class="col-info">
-        <p class="eyebrow">Chapter 06 — Dissolution</p>
-        <h2>Everything<br/><em>tends toward field</em></h2>
-        <p>The final chapter offers no resolution. Objects lose their edges, figures recede into gradient, and the frame itself becomes a question about where the work ends and the viewer begins.</p>
+        <p class="eyebrow">fig. 6 — ∑</p>
+        <h2>extreme<br/><em>Relaxation</em></h2>
+        <p>Combining haptic, acoustic, and optic stimulation creates a powerful multisensory experience. By deeply engaging the nervous system across multiple modalities, it eliminates sensory fragmentation and anchors the attention. ∑ induces a state of immersive flow. </p>
         <div class="meta">
-          <div class="meta-item"><span>Duration</span><span>11 min 02 sec</span></div>
-          <div class="meta-item"><span>Location</span><span>Atacama Desert</span></div>
-          <div class="meta-item"><span>Format</span><span>4K / 60fps</span></div>
+          <div class="meta-item"><span>∑</span><span>the sum is something besides it parts</span></div>
+          <div class="meta-item"><span>Duration</span><span>a session lasts between 5 - 10 min</span></div>
         </div>
         <div class="bottom-bar">
           <div class="dots" id="dots-5"></div>
